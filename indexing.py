@@ -89,17 +89,30 @@ def docs2dicionaryDoc():
     """
     
     # initialisation du dictionnaire
-    dicionaryDocs = {} 
+    dicionaryDocs = {}
+    #les documents de fichier text
+
+    ## code ajoute par Achraf
+    Documents_txt = "./Text_Only_Ascii_Coll_MWI_NoSem/Text_Only_Ascii_Coll_MWI_NoSem"
     # parcours des fichiers du repertoire documents folder, a  l'aide de la fonction listdir du module os
-    for filename in os.listdir(Documents_Folder): 
-        print("processing of file : "+filename)
 
-        #ouverture du fichier
-        with open(Documents_Folder + filename, encoding="utf8") as f:
-            filecontent = f.read()
+    # ouverture du fichier
+    with open(Documents_txt, encoding="utf8") as f:
+        filecontent = f.read()
 
-        #dÃ©coupage en mots ## word breakdown
-        liste = filtreMots(word_tokenize(filecontent))
+    """ les listes d'indice de doc, docno"""
+    A = outils.cherche_occurrences(filecontent, "<docno>")
+    B = outils.cherche_occurrences(filecontent, "</docno>")
+    C = outils.cherche_occurrences(filecontent, "</doc>")
+    DocsList = outils.getListIDs(filecontent, A, B)
+    for i in range (0,len(A)):
+    #for filename in os.listdir(Documents_Folder):
+        filename = DocsList[i]
+        print("processing of file : "+DocsList[i])
+        doc_content = outils.getTextByIndices(filecontent, A[i] + 8 + len(DocsList[i]), C[i])
+
+        #decoupage en mots ## word breakdown
+        liste = filtreMots(word_tokenize(doc_content))
 
         #suppression des mots outils
         liste = filtreMotsOutils(liste)
@@ -108,7 +121,7 @@ def docs2dicionaryDoc():
         listeStem = []
         for mot in liste:
             listeStem.append(outils.mot2racine(mot))
-        print("aprÃ¨s stemming : "+str(listeStem))
+        print("apres stemming : "+str(listeStem))
         #construction du dictionnaire mot --> frÃ©quence et ajout dans dicionary final
         dicionaryDocs[filename] = liste2dicionary(listeStem)
 
