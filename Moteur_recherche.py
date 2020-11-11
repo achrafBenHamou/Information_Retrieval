@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import indexer, monindex, outils, math
+import indexing, mon_index, outils, math
+from nltk import word_tokenize
 
 def welcome(user):
     """
@@ -13,7 +14,7 @@ def welcome(user):
     print()
     print("Bienvenue {}".format(user))
     print()
-    print("Ce moteur de recherche indexe {} documents. ".format(indexer.NBDOCS))
+#    print("Ce moteur de recherche indexe {} documents. ".format(indexing.NBDOCS))
     print()
 
 def saisie_requete():
@@ -21,20 +22,20 @@ def saisie_requete():
     Lecture d'une requÃªte
     :return: la requÃªte
     """
-    requete = input("Saisissez votre requÃªte, * pour arrÃªter : ")
+    requete = input("Saisissez votre requete, * pour arreter : ")
     return requete
 
 def pretraitement_requete(requete):
     """
-    Effectue le prÃ©-traitement de la requÃªte (tokenization, stopword removal, stemming
+    Effectue le pre-traitement de la requÃªte (tokenization, stopword removal, stemming
     Renvoie le vecteur requÃªte
     :param requete:
     :return: vecteur requÃªte
     """
-    liste_mots_requete = indexer.filtreMots(outils.string2list(requete))
+    liste_mots_requete = indexing.filtreMots(word_tokenize(requete))
 
     # suppression des mots outils
-    liste = indexer.filtreMotsOutils(liste_mots_requete)
+    liste = indexing.filtreMotsOutils(liste_mots_requete)
     print("sans mots outils : " + str(liste))
     # stemming
     dicoStem = {}
@@ -48,7 +49,7 @@ def pretraitement_requete(requete):
 
 def normeVecteur(vecteur):
     """
-    calcule la norme d'un vecteur (donnÃ© sous la forme d'un dictionnaire)
+    calcule la norme d'un vecteur (donne sous la forme d'un dictionnaire)
     """
     norme = 0
     # calcule la somme des poids au carrÃ©
@@ -59,11 +60,11 @@ def normeVecteur(vecteur):
 
 def calculeSimilarites(index, vecteurrequete):
     """
-    Pour un document donnÃ© et une requÃªte donnÃ©e, sous forme de vecteurs, calcule le cosinus et le renvoie
+    Pour un document donnÃ© et une requete donnee, sous forme de vecteurs, calcule le cosinus et le renvoie
     """
     ldocs_cosinus = {}
 
-    # parcours des racines de la requÃªte
+    # parcours des racines de la requete
     for stem in vecteurrequete:
         if stem in index.keys():
             # parcours des documents contenant cette racine
@@ -93,7 +94,7 @@ def affiche_resultat(ldocs_cosinus, n):
     Gestion de l'affichage des n documents les plus pertinents
     """
     if ldocs_cosinus=={}:
-        print("Il n'y a aucun rÃ©sultat pertinent pour cette requÃªte. ")
+        print("Il n'y a aucun resultat pertinent pour cette requete. ")
     else:
         # s'il y a moins de n documents pertinents
         if (len(ldocs_cosinus)<n):
@@ -115,8 +116,8 @@ def affiche_resultat(ldocs_cosinus, n):
 
 
 # prog principal
-welcome("Lorraine")
-index = monindex.MON_INDEX
+welcome("Cher Utilisateur")
+index = mon_index.MON_INDEX
 
 marequete = saisie_requete()
 while marequete != '*':

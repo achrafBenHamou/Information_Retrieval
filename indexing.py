@@ -1,29 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-cmd
 #lib
+
 import os
-from  nltk.stem.snowball import FrenchStemmer
 from nltk import word_tokenize
-from nltk.corpus import stopwords
-import string
-import codecs
 import math
 import outils
 
-#constantes
-#Documents Folder path
 Documents_Folder = "./XML_Coll_MWI_withSem/coll/"
 
 #nb of documents
 nb_docs = len(os.listdir(Documents_Folder))
-print("Nombre des documetns : ",nb_docs)
+print("Nombre des documents : ",nb_docs)
 
 
 #Les fonctions
 
 def tokenize_plus(listetokens):
     """
-    Traite les chaines non tokenizÃ©es avec apostrophe
+    Traite les chaines non tokenizees avec apostrophe
     """
     for token in listetokens:
         if ("'" in token):
@@ -40,7 +35,7 @@ def tokenize_plus(listetokens):
 #enlever les caracteres specieux pour le mot
 def nettoieMot(mot):
     """
-    EnlÃ¨ve les caractÃ¨res spÃ©ciaux
+    Enleve les caracteres speciaux
     """
     i=0
     for c in mot:
@@ -122,7 +117,7 @@ def docs2dicionaryDoc():
         for mot in liste:
             listeStem.append(outils.mot2racine(mot))
         print("apres stemming : "+str(listeStem))
-        #construction du dictionnaire mot --> frÃ©quence et ajout dans dicionary final
+        #construction du dictionnaire mot --> frequence et ajout dans dicionary final
         dicionaryDocs[filename] = liste2dicionary(listeStem)
 
     return dicionaryDocs
@@ -135,10 +130,10 @@ def dicionaryDoc2dicionaryStem(dicionaryDoc):
     for (file, dicionaryFile) in dicionaryDoc.items(): # parcours des documents
         for stem in dicionaryFile: # parcours des racines
             if stem in dicionaryStem.keys():
-                #si le stem st dÃ©jÃ  dans le dicionary rÃ©sultat on ajoute sa frÃ©quence pour le document file
+                #si le stem st deja  dans le dicionary resultat on ajoute sa frÃ©quence pour le document file
                 dicionaryStem[stem][file] = dicionaryFile[stem]
             else:
-                # sinon on crÃ©e un nouveau dictionnaire qu'on ajoute pour ce stem, puis on ajoute au dictionnaire le doc et la frÃ©quence
+                # sinon on cree un nouveau dictionnaire qu'on ajoute pour ce stem, puis on ajoute au dictionnaire le doc et la frÃ©quence
                 dicionaryStem[stem] = {}
                 dicionaryStem[stem][file] = dicionaryFile[stem]
     return dicionaryStem
@@ -221,11 +216,12 @@ def exportdicionary(index, filename):
     Exporte le dicionary sous forme d'un fichier  racine doc:freq (freq ou tf selon le dicionary input)
     """
     fd = open(filename, 'w') # ouverture du fichier rÃ©sultat
+
     for (stem, dicionaryStem) in index.items(): # parcours de l'index
         fd.write(stem+"\t") # affichage du terme
         for (doc, val) in dicionaryStem.items(): # affichage des docs:poids pour chaque terme
             fd.write(doc+":"+str(val)+"\t")
-        fd.write("\n") # retour Ã  la ligne aprÃ¨s chaque terme
+        fd.write("\n") # retour a  la ligne apres chaque terme
     fd.close() # fermeture du fichier
 
 
@@ -235,4 +231,6 @@ if __name__ == "__main__":
     # module de test - mettez ici le code a  executer
     d = genereIndex(True)
     print(d)
-    exportdicionary(d, "monindex.txt")
+    #exportdicionary(d, "monindex.py")
+    fd = open("mon_index.py", 'w')  # ouverture du fichier resultat
+    fd.write("MON_INDEX = " + str(d))
