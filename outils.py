@@ -1,38 +1,48 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
-#lib
-
-from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
-import string
+from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer
+import re
+
+XmlFilesFolder = "./XML_Coll_MWI_withSem/coll/"
+stop_words=set(stopwords.words("english"))
+
+###Fonctions ajoute par achraf
+def doc_preprocessing(doc):
+    # tout en miniscule
+    doc=doc.lower()
+    ## Replace line break to single space
+    doc = re.sub(r"\n", " ", doc)
+    ##Remove hyperlinks
+    doc=re.sub(r"https?://.*[\s]*","",doc)
+    ## Remove numbers and characters
+    doc=re.sub(r"[^a-z ]*","",doc)
+    ## Replace multiple spaces by single space
+    doc=re.sub(r"[\s]+"," ",doc)
+    return doc
+
+#we can change between stemmer and limmatization
+def TextTowords(text):
+    listeOfWords = word_tokenize(text)
+    list_stem_words=[]
+    from nltk.stem import WordNetLemmatizer
+    lemmatizer = WordNetLemmatizer()
+    for word in listeOfWords:
+        #from nltk.stem import PorterStemmer
+        #stemmer = PorterStemmer()
+        #word = stemmer.stem(word)
+        word = lemmatizer.lemmatize(word)
+        if(word not in stop_words):
+            list_stem_words.append(word)
+    return list_stem_words
 
 
-DOSSIERDOCUMENTS=""
-MOTSOUTILS = stopwords.words('english')
-def loadFile(filename):
-    """
-    Lit un fichier et le renvoie sous forme de chaine unicode (tout en minuscule)
-    """
-    with open(DOSSIERDOCUMENTS+filename) as f:
-        result = f.read()
-    return result.lower()
-
-
-def contientLettres(chaine):
-    for c in chaine:
-        if c in string.ascii_lowercase:
-            return True
-    return False
-
-def mot2racine(mot):
-    stemmer = PorterStemmer()
-    racine = stemmer.stem(mot)
-    return racine
-
-
-# outils ajoute par achraf
+def loadXmlFile(filename):
+    #read XML file
+    with open(XmlFilesFolder+filename) as f:
+        return f.read()
 
 def isprefixe(filecontent,mot,i):
     """Vérifie si mot a une occurrence dans texte en position i"""

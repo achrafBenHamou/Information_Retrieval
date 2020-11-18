@@ -7,82 +7,28 @@ from nltk import word_tokenize
 import math
 import outils
 
-Documents_Folder = "./XML_Coll_MWI_withSem/coll/"
-
+Xml_Documents_Folder = "./XML_Coll_MWI_withSem/coll/"
 #nb of documents
-nb_docs = len(os.listdir(Documents_Folder))
-print("Nombre des documents : ",nb_docs)
-
-
+#nb_docs = len(os.listdir(Documents_Folder))
+#print("Nombre des documents : ",nb_docs)
 #Les fonctions
-
-def tokenize_plus(listetokens):
-    """
-    Traite les chaines non tokenizees avec apostrophe
-    """
-    for token in listetokens:
-        if ("'" in token):
-            listetokens.remove(token)
-            listetokens += token.split("'")
-        if ("â€™" in token):
-            listetokens.remove(token)
-            listetokens += token.split("â€™")
-        if ("/" in token):
-            listetokens.remove(token)
-            listetokens += token.split("/")
-    return listetokens
-
-#enlever les caracteres specieux pour le mot
-def nettoieMot(mot):
-    """
-    Enleve les caracteres speciaux
-    """
-    i=0
-    for c in mot:
-        if c in u"Â«Â»Å‚.â”œ":
-            mot = mot[:i]+mot[i+1:]
-    return mot
-
-#input list of words
-def filtreMots(liste):
-    """
-    Prend une liste de tokens en entree, et supprime les elements qui ne sont pas des mots (ponctuation etc.)
-    """
-    listeResultat = [] # liste dans laquelle on va recopier les mots
-    for elem in liste:
-        if outils.contientLettres(elem): #on garde tout ce qui contient une lettre
-            listeResultat.append(elem)
-    return listeResultat
-
-def filtreMotsOutils(liste):
-    """
-    Prend en entree une liste de mots et en filtre les mots outils
-    """
-    listeResultat = []# liste dans laquelle on va recopier les mots
-    for mot in liste:
-        if mot not in outils.MOTSOUTILS: #on garde tout ce qui n'est pas un mot outil
-            listeResultat.append(mot)
-    return listeResultat
-
+#enlever les caracteres specieux pour le word
 
 #list of words to dictionary with frequency
 def liste2dicionary(liste):
-    """
-    Lit une liste de racines et renvoie le dictionnaire correspondant (mot -> frequence of word)
-    """
+    #Lit une liste de racines et renvoie le dictionnaire correspondant (word -> frequence of word)
     dicionary = {} #initialisation du nouveau dictionnaire
-    for mot in liste: # parcours des mots de la liste
-        if mot in dicionary.keys(): # si le mot est dÃ©jÃ  une clÃ© du dictionnaire on incrÃ©mente sa frÃ©quence
-            dicionary[mot] += 1
-        else: # sinon on l'ajoute comme nouvelle clÃ©
-            dicionary[mot] = 1
+    for word in liste: # parcours des words de la liste
+        if word in dicionary.keys(): # si le word est deja  un key du dictionnaire on incremente sa frequence
+            dicionary[word] += 1
+        else: # sinon on l'ajoute comme nouvelle key
+            dicionary[word] = 1
     return dicionary
 
 def docs2dicionaryDoc():
     """
     traitement des fichiers contenus dans Documents_Folder et convertit le corpus en dicionary doc -> stem -> freq
     """
-    
     # initialisation du dictionnaire
     dicionaryDocs = {}
     #les documents de fichier text
@@ -100,25 +46,24 @@ def docs2dicionaryDoc():
     B = outils.cherche_occurrences(filecontent, "</docno>")
     C = outils.cherche_occurrences(filecontent, "</doc>")
     DocsList = outils.getListIDs(filecontent, A, B)
+    global nb_docs
+    nb_docs = len(DocsList)
     for i in range (0,len(A)):
     #for filename in os.listdir(Documents_Folder):
         filename = DocsList[i]
         print("processing of file : "+DocsList[i])
         doc_content = outils.getTextByIndices(filecontent, A[i] + 8 + len(DocsList[i]), C[i])
-
-        #decoupage en mots ## word breakdown
-        liste = filtreMots(word_tokenize(doc_content))
-
-        #suppression des mots outils
-        liste = filtreMotsOutils(liste)
-        print("sans mots outils : "+str(liste))
-        #stemming
-        listeStem = []
-        for mot in liste:
-            listeStem.append(outils.mot2racine(mot))
-        print("apres stemming : "+str(listeStem))
-        #construction du dictionnaire mot --> frequence et ajout dans dicionary final
-        dicionaryDocs[filename] = liste2dicionary(listeStem)
+        #print("document content before preprocessing")
+        #print(doc_content)
+        doc_processed_content = outils.doc_preprocessing(doc_content)
+        print("document content after preprocessing")
+        print(doc_processed_content)
+        #decoupage en words ## word breakdown
+        listeOfWords = outils.TextTowords(doc_processed_content)
+        print("list after word_tokenize")
+        print(listeOfWords)
+        #construction du dictionnaire word --> frequence et ajout dans dicionary final
+        dicionaryDocs[filename] = liste2dicionary(listeOfWords)
 
     return dicionaryDocs
 
@@ -151,7 +96,7 @@ def calculeSomme(dicionaryStem):
 
 def calculeDFdicionary(dicionaryStem):
     """
-    prend en entrÃ©e le dicionary stem et calcule le DF de chaque stem et le stocke dans le dicionary Ã  l'indice "df"
+    prend en entree le dicionary stem et calcule le DF de chaque stem et le stocke dans le dicionary Ã  l'indice "df"
     """
     for stem in dicionaryStem:
         dicionaryStem[stem]["df"] = len(dicionaryStem[stem])
@@ -160,7 +105,7 @@ def calculeDFdicionary(dicionaryStem):
 
 def calculenormalizedTFIDFdicionary(dicionaryStem):
     """
-    calcule le tf idf normalisÃ© de chaque stem/doc
+    calcule le tf idf normalisee de chaque stem/doc
     """
     normdocs = {}
     for stem in dicionaryStem:  # pour chaque stem
@@ -211,26 +156,11 @@ def genereIndex(tf):
         return dicionaryDoc2dicionaryStem(docs2dicionaryDoc())
     print("-------------------------------------------------")
 
-def exportdicionary(index, filename):
-    """
-    Exporte le dicionary sous forme d'un fichier  racine doc:freq (freq ou tf selon le dicionary input)
-    """
-    fd = open(filename, 'w') # ouverture du fichier rÃ©sultat
-
-    for (stem, dicionaryStem) in index.items(): # parcours de l'index
-        fd.write(stem+"\t") # affichage du terme
-        for (doc, val) in dicionaryStem.items(): # affichage des docs:poids pour chaque terme
-            fd.write(doc+":"+str(val)+"\t")
-        fd.write("\n") # retour a  la ligne apres chaque terme
-    fd.close() # fermeture du fichier
-
-
-
-
 if __name__ == "__main__":
     # module de test - mettez ici le code a  executer
     d = genereIndex(True)
     print(d)
-    #exportdicionary(d, "monindex.py")
-    fd = open("mon_index.py", 'w')  # ouverture du fichier resultat
+    # ouverture du fichier resultat
+    fd = open("mon_index.py", 'w')
     fd.write("MON_INDEX = " + str(d))
+    print("index generated with succes at file mon_index.py")

@@ -4,6 +4,10 @@
 import indexing, mon_index, outils, math
 from nltk import word_tokenize
 
+from outils import doc_preprocessing
+
+groupe_name = "AbouAchrafAmineAli"
+
 def welcome(user):
     """
     Affichage d'accueil du moteur
@@ -14,8 +18,9 @@ def welcome(user):
     print()
     print("Bienvenue {}".format(user))
     print()
-#    print("Ce moteur de recherche indexe {} documents. ".format(indexing.NBDOCS))
+    #    print("Ce moteur de recherche indexe {} documents. ".format(indexing.NBDOCS))
     print()
+
 
 def saisie_requete():
     """
@@ -25,38 +30,36 @@ def saisie_requete():
     requete = input("Saisissez votre requete, * pour arreter : ")
     return requete
 
+
 def pretraitement_requete(requete):
     """
-    Effectue le pre-traitement de la requÃªte (tokenization, stopword removal, stemming
+    Effectue le pre-traitement de la requete (tokenization, stopword removal, stemming
     Renvoie le vecteur requÃªte
     :param requete:
-    :return: vecteur requÃªte
+    :return: vecteur requete
     """
-    liste_mots_requete = indexing.filtreMots(word_tokenize(requete))
-
-    # suppression des mots outils
-    liste = indexing.filtreMotsOutils(liste_mots_requete)
-    print("sans mots outils : " + str(liste))
-    # stemming
+    processed_text = outils.doc_preprocessing(requete)
+    liste = outils.TextTowords(processed_text)
     dicoStem = {}
     for mot in liste:
-        rac = outils.mot2racine(mot)
-        if rac in dicoStem.keys():
-            dicoStem[rac] += 1
+        if mot in dicoStem.keys():
+            dicoStem[mot] += 1
         else:
-            dicoStem[rac] = 1
+            dicoStem[mot] = 1
     return dicoStem
+
 
 def normeVecteur(vecteur):
     """
     calcule la norme d'un vecteur (donne sous la forme d'un dictionnaire)
     """
     norme = 0
-    # calcule la somme des poids au carrÃ©
+    # calcule la somme des poids au carre
     for (t, w) in vecteur.items():
-        norme += w**2
-    # renvoie la racine carrÃ©e
+        norme += w ** 2
+    # renvoie la racine carre
     return math.sqrt(norme)
+
 
 def calculeSimilarites(index, vecteurrequete):
     """
@@ -69,14 +72,15 @@ def calculeSimilarites(index, vecteurrequete):
         if stem in index.keys():
             # parcours des documents contenant cette racine
             for doc in index[stem]:
-                if doc in ldocs_cosinus.keys() and doc !='df':
+                if doc in ldocs_cosinus.keys() and doc != 'df':
                     ldocs_cosinus[doc] += vecteurrequete[stem] * index[stem][doc]
-                elif doc !='df':
+                elif doc != 'df':
                     ldocs_cosinus[doc] = vecteurrequete[stem] * index[stem][doc]
     # calcul cosinus : produit scalaire / norme req
     for doc in ldocs_cosinus:
         ldocs_cosinus[doc] /= normeVecteur(vecteurrequete)
     return ldocs_cosinus
+
 
 def max_dicodoc(ldocs_cosinus, doc_exclus):
     """
@@ -84,7 +88,7 @@ def max_dicodoc(ldocs_cosinus, doc_exclus):
     """
     max = ("", -1)
     for doc in ldocs_cosinus.keys():
-        if ldocs_cosinus[doc]>max[1] and doc not in doc_exclus:
+        if ldocs_cosinus[doc] > max[1] and doc not in doc_exclus:
             max = (doc, ldocs_cosinus[doc])
     return max
 
@@ -93,35 +97,55 @@ def affiche_resultat(ldocs_cosinus, n):
     """
     Gestion de l'affichage des n documents les plus pertinents
     """
-    if ldocs_cosinus=={}:
+    if ldocs_cosinus == {}:
         print("Il n'y a aucun resultat pertinent pour cette requete. ")
     else:
         # s'il y a moins de n documents pertinents
-        if (len(ldocs_cosinus)<n):
+        if len(ldocs_cosinus) < n:
+            n = len(ldocs_cosinus)
+
+        nbdocs = 0
+        topn = {}
+        exclus = []
+
+        # boucle visant Ã  trouver les n documents les plus pertinents
+        for i in range(1, n + 1):
+            max_doc = max_dicodoc(ldocs_cosinus, exclus)
+            exclus.append(max_doc[0])
+            print("{}) Document {} - score {}\n".format(i, max_doc[0], max_doc[1]))
+        print()
+
+
+# Abou
+def read_request_file():
+    file = open("./data/request.txt", "r")
+    lines = file.readlines()
+    return lines
+
+
+def put_result_file(ldocs_cosinus, n, req):
+    output_file = open("./data/runs/" + "AbouAchrafAmineAli_01_01_btc_articles.txt", "a")
+    if ldocs_cosinus == {}:
+        print("Il n'y a aucun resultat pertinent pour cette requete. ")
+    else:
+        if len(ldocs_cosinus) < n:
             n = len(ldocs_cosinus)
 
         nbdocs = 0
         topn = {}
 
-        print("Les {} documents les plus pertinents sont : ".format(n))
         exclus = []
-
-        # boucle visant Ã  trouver les n documents les plus pertinents
-        for i in range(1, n+1):
+        for i in range(1, n + 1):
             max_doc = max_dicodoc(ldocs_cosinus, exclus)
             exclus.append(max_doc[0])
-            print("{}) Document {} - score {}".format(i, max_doc[0], max_doc[1]))
-        print()
+            output_file.write("{} {} {} {} {} {} {}\n"
+                              .format(req, "Q0", max_doc[0], i, max_doc[1], groupe_name, "/article[1]"))
 
 
-
-# prog principal
-welcome("Cher Utilisateur")
-index = mon_index.MON_INDEX
-
-marequete = saisie_requete()
-while marequete != '*':
-    vecteur_req = pretraitement_requete(marequete)
-    affiche_resultat(calculeSimilarites(index, vecteur_req), 5)
-
-    marequete = saisie_requete()
+if __name__ == "__main__":
+    welcome("Cher Utilisateur")
+    index = mon_index.MON_INDEX
+    myrequest = read_request_file()
+    for item in myrequest:
+        request_preprocess = pretraitement_requete(item.split(":")[1].rstrip("\n"))
+        put_result_file(calculeSimilarites(index, request_preprocess), 1500, item.split(":")[0])
