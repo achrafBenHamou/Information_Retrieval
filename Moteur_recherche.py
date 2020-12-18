@@ -8,20 +8,6 @@ from outils import doc_preprocessing
 
 groupe_name = "AbouAchrafAmineAli"
 
-def welcome(user):
-    """
-    Affichage d'accueil du moteur
-    :param user:
-    :return: None
-    """
-    print("=======================================================================")
-    print()
-    print("Bienvenue {}".format(user))
-    print()
-    #    print("Ce moteur de recherche indexe {} documents. ".format(indexing.NBDOCS))
-    print()
-
-
 def saisie_requete():
     """
     Lecture d'une requÃªte
@@ -143,7 +129,6 @@ def put_result_file(ldocs_cosinus, n, req):
 
 
 if __name__ == "__main__":
-    welcome("Cher Utilisateur")
     index = mon_index.MON_INDEX
     myrequest = read_request_file()
     for item in myrequest:
