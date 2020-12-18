@@ -4,26 +4,34 @@ class InvertedIndex:
         self.payload = dict()
 
     def __contains__(self, item):
-        return item in self.index
+        return item in self.payload
 
     def __getitem__(self, item):
-        return self.index[item]
+        return self.payload[item]
+
+    def persist(self):
+        try:
+            import cPickle as pickle
+        except ImportError:  # Python 3.x
+            import pickle
+        with open('data.p', 'wb') as fp:
+            pickle.dump(self.payload, fp, protocol=pickle.HIGHEST_PROTOCOL)
 
     def add(self, word, doc_id):
-        if word in self.index:
-            if doc_id in self.index[word]:
-                self.index[word][doc_id] += 1
+        if word in self.payload:
+            if doc_id in self.payload[word]:
+                self.payload[word][doc_id] += 1
             else:
-                self.index[word][doc_id] = 1
+                self.payload[word][doc_id] = 1
         else:
             dict_word = dict()
             dict_word[doc_id] = 1
-            self.index[word] = dict_word
+            self.payload[word] = dict_word
 
     def get_document_frequency(self, word, doc_id):
-        if word in self.index:
-            if doc_id in self.index[word]:
-                return self.index[word][doc_id]
+        if word in self.payload:
+            if doc_id in self.payload[word]:
+                return self.payload[word][doc_id]
             else:
                 raise LookupError('%s not in document %s' % (str(word), str(doc_id)))
         else:
@@ -34,7 +42,7 @@ class InvertedIndex:
         :param word: the word
         :return: number of document contained the word
         """
-        if word in self.index:
-            return len(self.index[word])
+        if word in self.payload:
+            return len(self.payload[word])
         else:
             raise LookupError('%s not in index' % word)

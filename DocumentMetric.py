@@ -10,14 +10,17 @@ class LengthTable:
     def __len__(self):
         return len(self.table)
 
-    def add(self, docid, length):
-        self.table[docid] = length
+    def __contains__(self, item):
+        return item in self.table
 
-    def get_length(self, docid):
-        if docid in self.table:
-            return self.table[docid]
+    def add(self, doc_id, length):
+        self.table[doc_id] = length
+
+    def get_length(self, doc_id):
+        if doc_id in self.table.keys():
+            return self.table[doc_id]
         else:
-            raise LookupError('%s not found in table' % str(docid))
+            raise LookupError('%s not found in table' % str(doc_id))
 
     def get_average_length(self):
         sum = 0

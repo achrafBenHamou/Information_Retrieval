@@ -39,11 +39,27 @@ class CorpusParser:
                 self.corpus[int(xml_object[idx][0].text)] = self.doc_preprocessing(xml_object[idx][0].tail)
         logging.info("Parsing done !!")
 
-    def get_doc(self, id):
-        self.corpus.get(id)
+    def get_doc(self, doc_id):
+        self.corpus.get(doc_id)
 
     def get_corpus(self):
         return self.corpus
 
     def get_nb_docs(self):
         return len(self.corpus)
+
+
+class QueryParser:
+
+    def __init__(self, filename=None):
+        self.filename = filename if filename is not None else ConfigFile().get_data_config("query")
+        self.queries = []
+        self.parse()
+
+    def parse(self):
+        with open(self.filename) as f:
+            lines = ''.join(f.readlines())
+        self.queries = [[x.rstrip().split(":")[0], x.rstrip().split(":")[1].rstrip().split()] for x in lines.split('\n')[:-1]]
+
+    def get_queries(self):
+        return self.queries
