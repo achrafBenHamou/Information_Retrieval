@@ -3,3 +3,4 @@ data:
     query: data/query/request.txt
     xml_folder: data/coll
     run_folder: data/runs
+    persist:

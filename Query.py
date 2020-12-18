@@ -16,11 +16,13 @@ class Engine:
         return results
 
     def run_query(self, query):
+        count =0
         query_result = dict()
         for term in query:
             if term in self.index:
                 doc_dict = self.index[term]  # retrieve index entry
                 for doc_id, freq in doc_dict.items():  # for each document and its word frequency
+                    print("Numbers of results : {} of the request {}".format(len(doc_dict.items()), query))
                     score = BM25(number_docs=len(doc_dict), freq=freq, qf=1, r=0, N=len(self.dlt),
                                  doc_length=self.dlt.get_length(doc_id)
                                  , average_doc_length=self.dlt.get_average_length())  # calculate score

@@ -92,12 +92,12 @@ Here's a blank template to get started:
 `github_username`, `repo_name`, `twitter_handle`, `email`, `project_title`, `project_description`
 
 
-### Built With
+### Authors
 
-* []()
-* []()
-* []()
-
+* [Abou SANOU]()
+* [Achraf ]()
+* [Ali ]()
+* [Amine ]()
 
 
 <!-- GETTING STARTED -->
@@ -121,7 +121,7 @@ This is an example of how to list things you need to use the software and how to
    ```
 2. Install NPM packages
    ```sh
-   npm install
+   python3 main.py
    ```
 
 
@@ -165,9 +165,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email
+Abou SANOU - [@twitter_handle](https://twitter.com/twitter_handle) - email
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Project Link: [https://github.com/achrafBenHamou/Information_Retrieval/](https://github.com/achrafBenHamou/Information_Retrieval/)
 
 
 

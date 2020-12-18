@@ -9,6 +9,9 @@ class InvertedIndex:
     def __getitem__(self, item):
         return self.payload[item]
 
+    def __str__(self):
+        return self.payload
+
     def persist(self):
         try:
             import cPickle as pickle
