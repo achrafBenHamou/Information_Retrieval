@@ -1,4 +1,5 @@
 __author__ = 'Abou SANOU'
+
 from Buider import build_data_structures
 from weight_function import BM25
 
@@ -20,8 +21,9 @@ class Engine:
             if term in self.index:
                 doc_dict = self.index[term]  # retrieve index entry
                 for doc_id, freq in doc_dict.items():  # for each document and its word frequency
-                    score = BM25(number_docs=len(doc_dict), freq=freq, qf=1, r=0, N=len(self.dlt), doc_length=self.dlt.get_length(doc_id)
-                                 ,average_doc_length=self.dlt.get_average_length())  # calculate score
+                    score = BM25(number_docs=len(doc_dict), freq=freq, qf=1, r=0, N=len(self.dlt),
+                                 doc_length=self.dlt.get_length(doc_id)
+                                 , average_doc_length=self.dlt.get_average_length())  # calculate score
                     if doc_id in query_result:  # this document has already been scored once
                         query_result[doc_id] += score
                     else:

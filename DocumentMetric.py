@@ -17,8 +17,8 @@ class LengthTable:
         self.table[doc_id] = length
 
     def get_length(self, doc_id):
-        if doc_id in self.table.keys():
-            return self.table[doc_id]
+        if int(doc_id) in self.table.keys():
+            return self.table[int(doc_id)]
         else:
             raise LookupError('%s not found in table' % str(doc_id))
 
