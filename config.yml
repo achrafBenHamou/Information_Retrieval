@@ -11,4 +11,4 @@ run_step:
     step: 1
     step_min: 2
     w_func: btc
-    search_level: articles[1]
+    search_level: articles
