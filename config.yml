@@ -3,9 +3,10 @@ data:
     query: data/query/request.txt
     xml_folder: data/coll/
     run_folder: data/runs/
-    persist: data/persist
     caching: True
-
+    persist_index: data/persist/data_index.pkl
+    persist_length: data/persist/data_length.pkl
+    group:
 run_step:
     step: 1
     step_min: 2

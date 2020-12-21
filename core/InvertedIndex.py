@@ -3,7 +3,7 @@ from config.Config import ConfigFile
 
 class InvertedIndex:
 
-    def __init__(self, caching):
+    def __init__(self):
         self.payload = dict()
 
     def __contains__(self, item):
@@ -20,12 +20,16 @@ class InvertedIndex:
             import cPickle as pickle
         except ImportError:  # Python 3.x
             import pickle
-        with open(ConfigFile().get_data_config("filename"), 'wb') as fp:
-            pickle.dump(self.payload, fp, protocol=pickle.HIGHEST_PROTOCOL)
+        with open(ConfigFile().get_data_config("persist_index"), 'wb') as file:
+            pickle.dump(self, file, protocol=pickle.HIGHEST_PROTOCOL)
 
-    def load(self):
-        self.payload = dict()
-        pass
+    def load(self, path=ConfigFile().get_data_config("persist_index")):
+        try:
+            import cPickle as pickle
+        except ImportError:  # Python 3.x
+            import pickle
+        with open(path, 'wb') as file:
+            self.payload = pickle.load(file)
 
     def add(self, word, doc_id):
         if word in self.payload:
@@ -56,3 +60,11 @@ class InvertedIndex:
             return len(self.payload[word])
         else:
             raise LookupError('%s not in index' % word)
+    @staticmethod
+    def get_instance():
+        try:
+            import cPickle as pickle
+        except ImportError:  # Python 3.x
+            import pickle
+        with open(ConfigFile().get_data_config("persist_index"), 'rb') as file:
+            return pickle.load(file)

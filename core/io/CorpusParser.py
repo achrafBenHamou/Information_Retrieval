@@ -5,6 +5,7 @@ import logging
 from nltk import word_tokenize, WordNetLemmatizer
 from nltk.corpus import stopwords
 from config.Config import ConfigFile
+from core.utils.Util import caching_files_exist
 
 
 class CorpusParser:
@@ -14,7 +15,8 @@ class CorpusParser:
         self.filename = filename if filename is not None else ConfigFile().get_data_config("filename")
         self.corpus = dict()
         self.cleaning = cleaning
-        self.parse()
+        if not (caching_files_exist() and ConfigFile().get_data_config("caching")):
+            self.parse()
 
     def doc_preprocessing(self, text):
         list_lemma = []
