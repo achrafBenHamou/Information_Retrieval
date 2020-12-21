@@ -1,3 +1,6 @@
+from config.Config import ConfigFile
+
+
 class LengthTable:
     """
     This class will contained some information about each document
@@ -9,6 +12,14 @@ class LengthTable:
 
     def __len__(self):
         return len(self.table)
+
+    def persist(self):
+        try:
+            import cPickle as pickle
+        except ImportError:  # Python 3.x
+            import pickle
+        with open(ConfigFile().get_data_config("persist_length"), 'wb') as file:
+            pickle.dump(self, file, protocol=pickle.HIGHEST_PROTOCOL)
 
     def __contains__(self, item):
         return item in self.table
@@ -27,3 +38,12 @@ class LengthTable:
         for length in self.table.values():
             sum += length
         return float(sum) / float(len(self.table))
+
+    @staticmethod
+    def get_instance():
+        try:
+            import cPickle as pickle
+        except ImportError:  # Python 3.x
+            import pickle
+        with open(ConfigFile().get_data_config("persist_length"), 'rb') as file:
+            return pickle.load(file)

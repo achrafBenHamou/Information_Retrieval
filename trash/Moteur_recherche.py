@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import indexing, mon_index, outils, math
-from nltk import word_tokenize
-
-from outils import doc_preprocessing
+import math
+from trash import outils
 
 groupe_name = "AbouAchrafAmineAli"
 

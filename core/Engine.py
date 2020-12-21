@@ -1,11 +1,12 @@
 __author__ = 'Abou SANOU'
 
-from Buider import build_data_structures
-from weight_function import BM25
+from core.utils.Builder import build_data_structures
+from core.weight_function import BM25
 
 
 class Engine:
-    def __init__(self, queries, corpus):
+    def __init__(self, queries, corpus, persit_mode=True):
+        self.persit_mode = persit_mode
         self.queries = queries
         self.index, self.dlt = build_data_structures(corpus)
 
@@ -16,13 +17,13 @@ class Engine:
         return results
 
     def run_query(self, query):
-        count =0
+        count = 0
         query_result = dict()
         for term in query:
             if term in self.index:
                 doc_dict = self.index[term]  # retrieve index entry
                 for doc_id, freq in doc_dict.items():  # for each document and its word frequency
-                    print("Numbers of results : {} of the request {}".format(len(doc_dict.items()), query))
+                    #print("Numbers of results : {} of the request {}".format(len(doc_dict.items()), query))
                     score = BM25(number_docs=len(doc_dict), freq=freq, qf=1, r=0, N=len(self.dlt),
                                  doc_length=self.dlt.get_length(doc_id)
                                  , average_doc_length=self.dlt.get_average_length())  # calculate score

@@ -4,7 +4,8 @@ import logging
 
 from nltk import word_tokenize, WordNetLemmatizer
 from nltk.corpus import stopwords
-from Config import ConfigFile
+from config.Config import ConfigFile
+from core.utils.Util import caching_files_exist
 
 
 class CorpusParser:
@@ -14,7 +15,8 @@ class CorpusParser:
         self.filename = filename if filename is not None else ConfigFile().get_data_config("filename")
         self.corpus = dict()
         self.cleaning = cleaning
-        self.parse()
+        if not (caching_files_exist() and ConfigFile().get_data_config("caching")):
+            self.parse()
 
     def doc_preprocessing(self, text):
         list_lemma = []
@@ -39,6 +41,9 @@ class CorpusParser:
                 self.corpus[int(xml_object[idx][0].text)] = self.doc_preprocessing(xml_object[idx][0].tail)
         logging.info("Parsing done !!")
 
+    def parseXml(self):
+        pass
+
     def get_doc(self, doc_id):
         self.corpus.get(doc_id)
 
@@ -48,18 +53,3 @@ class CorpusParser:
     def get_nb_docs(self):
         return len(self.corpus)
 
-
-class QueryParser:
-
-    def __init__(self, filename=None):
-        self.filename = filename if filename is not None else ConfigFile().get_data_config("query")
-        self.queries = []
-        self.parse()
-
-    def parse(self):
-        with open(self.filename) as f:
-            lines = ''.join(f.readlines())
-        self.queries = [[x.rstrip().split(":")[0], x.rstrip().split(":")[1].rstrip().split()] for x in lines.split('\n')[:-1]]
-
-    def get_queries(self):
-        return self.queries

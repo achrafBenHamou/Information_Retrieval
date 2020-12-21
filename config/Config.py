@@ -18,3 +18,6 @@ class ConfigFile(metaclass=Singleton):
 
     def get_data_config(self, item):
         return self.cfg["data"][item]
+
+    def get_run_config(self, item):
+        return self.cfg["run_step"][item]
