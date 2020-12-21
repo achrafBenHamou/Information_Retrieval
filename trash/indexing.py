@@ -2,10 +2,8 @@
 # -*- coding: utf-8 -*-cmd
 # lib
 
-import os
-from nltk import word_tokenize
 import math
-import outils
+from trash import outils
 
 Xml_Documents_Folder = "./XML_Coll_MWI_withSem/coll/"
 

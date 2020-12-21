@@ -1,6 +1,9 @@
+from config.Config import ConfigFile
+
+
 class InvertedIndex:
 
-    def __init__(self):
+    def __init__(self, caching):
         self.payload = dict()
 
     def __contains__(self, item):
@@ -17,8 +20,12 @@ class InvertedIndex:
             import cPickle as pickle
         except ImportError:  # Python 3.x
             import pickle
-        with open('data.p', 'wb') as fp:
+        with open(ConfigFile().get_data_config("filename"), 'wb') as fp:
             pickle.dump(self.payload, fp, protocol=pickle.HIGHEST_PROTOCOL)
+
+    def load(self):
+        self.payload = dict()
+        pass
 
     def add(self, word, doc_id):
         if word in self.payload:

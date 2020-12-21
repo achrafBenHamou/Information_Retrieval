@@ -1,11 +1,12 @@
 __author__ = 'Abou SANOU'
 
 from core.utils.Builder import build_data_structures
-from weight_function import BM25
+from core.weight_function import BM25
 
 
 class Engine:
-    def __init__(self, queries, corpus):
+    def __init__(self, queries, corpus, persit_mode=True):
+        self.persit_mode = persit_mode
         self.queries = queries
         self.index, self.dlt = build_data_structures(corpus)
 

@@ -2,6 +2,7 @@ from core.io.CorpusParser import CorpusParser
 from core.io.QueryParser import QueryParser
 
 from core.Engine import Engine
+from core.io.RunBuilder import RunBuilder
 
 if __name__ == "__main__":
 
@@ -13,6 +14,7 @@ if __name__ == "__main__":
                     corpus.get_corpus())
     results = engine.run()
 
+    #builder = RunBuilder(results)
     print(results)
 
 
