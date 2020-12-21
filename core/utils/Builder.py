@@ -1,5 +1,5 @@
-from DocumentMetric import LengthTable
-from InvertedIndex import InvertedIndex
+from LengthTable import LengthTable
+from core.InvertedIndex import InvertedIndex
 
 
 def build_data_structures(corpus):

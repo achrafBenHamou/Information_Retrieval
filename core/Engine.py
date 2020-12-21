@@ -1,6 +1,6 @@
 __author__ = 'Abou SANOU'
 
-from Buider import build_data_structures
+from core.utils.Builder import build_data_structures
 from weight_function import BM25
 
 
@@ -16,7 +16,7 @@ class Engine:
         return results
 
     def run_query(self, query):
-        count =0
+        count = 0
         query_result = dict()
         for term in query:
             if term in self.index:
