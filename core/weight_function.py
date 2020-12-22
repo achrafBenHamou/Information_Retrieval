@@ -1,4 +1,4 @@
-__author__ = 'Abou SANOU'
+
 
 from math import log
 
@@ -30,3 +30,19 @@ def compute_K(doc_length, average_doc_length):
 
 def ltn(tf, dft, N):
     return (1 + log(tf)) * log(N / dft)
+
+def bnn():
+    tf= 1
+    idf= 1
+    N= 1
+    return (tf * idf * N)
+
+def btn(df, N):
+    tf= 1
+    idf= log(N / df)
+    N= 1
+    return (tf * idf * N)
+
+
+
+

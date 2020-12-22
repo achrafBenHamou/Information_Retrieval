@@ -10,5 +10,5 @@ data:
 run_step:
     step: 1
     step_min: 2
-    w_func: btc
+    w_func: BM25
     search_level: articles
