@@ -40,8 +40,8 @@ def bnn():
 def btn(df, N):
     tf= 1
     idf= log(N / df)
-    N= 1
-    return (tf * idf * N)
+    Norm= 1
+    return (tf * idf * Norm)
 
 
 
