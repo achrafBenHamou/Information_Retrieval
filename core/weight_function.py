@@ -34,14 +34,34 @@ def ltn(tf, dft, N):
 def bnn():
     tf= 1
     idf= 1
-    N= 1
-    return (tf * idf * N)
+    Norm= 1
+    return (tf * idf * Norm)
 
 def btn(df, N):
     tf= 1
     idf= log(N / df)
     Norm= 1
     return (tf * idf * Norm)
+
+def lsn(tf, df, N):
+    tfl= 1 + log(tf)
+    idf= (log((N + 1) / (df)) ** 2
+    Norm= 1
+    return (tfl * idf * Norm)
+          
+def ntn(tf, df, N):
+    tfn= tf
+    idf= log(N / df)
+    Norm= 1
+    return (tfn * idf * Norm)
+          
+def nnn(tf):
+    tfn= tf
+    idf= 1
+    Norm= 1
+    return (tfn * idf * Norm)
+       
+    
 
 
 
