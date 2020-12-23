@@ -60,9 +60,84 @@ def nnn(tf):
     idf= 1
     Norm= 1
     return (tfn * idf * Norm)
-       
+         
+          
+ def nfn(tf, df):
+      tfn= tf
+      idf= 1 / df
+      Norm= 1
+      return (tfn * idf * Norm)
+          
+ def npn(tf, df, N):
+      tfn= tf
+      idf= log((N - df) / (df))
+      Norm= 1
+      return (tfn * idf * Norm)
+          
+  def nsn(tf, df, N):
+      tfn= tf
+      idf= (log((N + 1) / (df)) ** 2
+      Norm= 1
+      return (tfn * idf * Norm)
+            
+   def bpn(df, N):
+       tf= 1
+       idf= log((N - df) / (df))
+       Norm= 1
+       return (tf * idf * Norm)
+            
+    def bsn(df, N):
+        tf= 1
+        idf= (log((N + 1) / (df)) ** 2
+        Norm= 1
+        return (tf * idf * Norm)
+          
+    def bfn(df):
+        tf= 1
+        idf= 1 / df
+        Norm= 1
+        return (tf * idf * Norm)
+          
+    def ssn(tf, df, N):
+        tfs= tf ** 2
+        idf= (log((N + 1) / (df)) ** 2
+        Norm= 1
+        return (tfs * idf * Norm)
+          
+    def spn(tf, df, N):
+        tfs= tf ** 2
+        idf= log((N - df) / (df))
+        Norm= 1
+        return (tfs * idf * Norm)
+          
+    def sfn(tf, df):
+        tfs= tf ** 2
+        idf= 1 / df
+        Norm= 1
+        return (tfs * idf * Norm)
+          
+    def stn(tf, df, N):
+        tfs= tf ** 2
+        idf= log(N / df)
+        Norm= 1
+        return (tfs * idf * Norm)
+          
+    def snn(tf):
+        tfs= tf ** 2
+        idf= 1
+        Norm= 1
+        return (tfs * idf * Norm)
+          
+          
+          
+     
+          
+     
+          
+     
+            
     
 
-
-
-
+            
+  
+ 
