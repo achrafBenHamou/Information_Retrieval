@@ -127,6 +127,34 @@ def nnn(tf):
         idf= 1
         Norm= 1
         return (tfs * idf * Norm)
+              
+     def lnn(tf):
+         tfl= 1 + log(tf)
+         idf= 1
+         Norm= 1
+         return (tfl * idf * Norm)
+              
+       
+              
+                
+        def lfn(tf, df):
+            tfl= 1 + log(tf)
+            idf= 1 / df
+            Norm= 1
+            return (tfl * idf * Norm)
+              
+        
+          def lpn(tf, df, N):
+              tfl= 1 + log(tf)
+              idf= log((N - df) / (df))
+              Norm= 1
+              return (tfl * idf * Norm)
+              
+              
+         
+         
+          
+          
           
           
           
