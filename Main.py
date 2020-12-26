@@ -9,6 +9,5 @@ if __name__ == "__main__":
     queries = QueryParser()
     engine = Engine(queries.get_queries(), corpus.get_corpus())
     results = engine.run()
-
+    print(results)
     builder = RunBuilder(results)
-
