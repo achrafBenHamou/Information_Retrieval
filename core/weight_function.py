@@ -15,7 +15,6 @@ R = 0.0
 # average_doc_length : average length of all documents
 # qf = 1
 # r = 0
-#
 def BM25(number_docs, freq, qf, r, N, doc_length, average_doc_length):
     K = compute_K(doc_length, average_doc_length)
     td = log(((r + 0.5) / (R - r + 0.5)) / ((number_docs - r + 0.5) / (N - number_docs - R + r + 0.5)))
@@ -31,6 +30,14 @@ def compute_K(doc_length, average_doc_length):
 def ltn(tf, dft, N):
     return (1 + log(tf)) * log(N / dft)
 
+
+
+def bnn():
+    pass
+
+def xyz():
+    pass
+  
 def bnn():
     tf= 1
     idf= 1
@@ -149,23 +156,4 @@ def nnn(tf):
               idf= log((N - df) / (df))
               Norm= 1
               return (tfl * idf * Norm)
-              
-              
-         
-         
-          
-          
-          
-          
-          
-     
-          
-     
-          
-     
-            
-    
 
-            
-  
- 

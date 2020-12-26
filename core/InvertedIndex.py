@@ -4,6 +4,8 @@ from config.Config import ConfigFile
 class InvertedIndex:
 
     def __init__(self):
+        # word -> [ doc1, doc2 , doc3]
+        # word1 -> [doc1]
         self.payload = dict()
 
     def __contains__(self, item):
