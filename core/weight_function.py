@@ -37,123 +37,133 @@ def bnn():
 
 def xyz():
     pass
-  
-def bnn():
-    tf= 1
-    idf= 1
-    Norm= 1
-    return (tf * idf * Norm)
 
-def btn(df, N):
+def bnn(is_present, ):
+    tf = 1
+    idf = 1
+    Norm = 1
+    if is_present:
+        tf * idf * Norm
+    else:
+        return 0
+
+
+
+def btn(is_present,df , N):
     tf= 1
-    idf= log(N / df)
-    Norm= 1
-    return (tf * idf * Norm)
+    norm = 1
+    if is_present:
+        idf = log(N / df)
+        return tf * idf * 1
+    else:
+        return 0
+
+
 
 def lsn(tf, df, N):
-    tfl= 1 + log(tf)
-    idf= (log((N + 1) / (df)) ** 2
-    Norm= 1
-    return (tfl * idf * Norm)
+    tfl = 1 + log(tf)
+    idf = (log((N + 1) / df))**2
+    return tfl * idf
           
 def ntn(tf, df, N):
     tfn= tf
     idf= log(N / df)
     Norm= 1
-    return (tfn * idf * Norm)
+    return tfn * idf * Norm
           
 def nnn(tf):
     tfn= tf
     idf= 1
-    Norm= 1
-    return (tfn * idf * Norm)
+    norm= 1
+    return tfn * idf * norm
          
           
- def nfn(tf, df):
-      tfn= tf
-      idf= 1 / df
-      Norm= 1
-      return (tfn * idf * Norm)
+def nfn(tf, df):
+    tfn = tf
+    idf = 1 / df
+    norm = 1
+    return tfn * idf * norm
           
- def npn(tf, df, N):
-      tfn= tf
-      idf= log((N - df) / (df))
-      Norm= 1
-      return (tfn * idf * Norm)
+def npn(tf, df, N):
+    tfn= tf
+    idf= log((N - df) / df)
+    Norm= 1
+    return tfn * idf * Norm
           
-  def nsn(tf, df, N):
-      tfn= tf
-      idf= (log((N + 1) / (df)) ** 2
-      Norm= 1
-      return (tfn * idf * Norm)
+def nsn(tf, df, N):
+    tfn= tf
+    idf= (log((N + 1) / df)) ** 2
+    Norm = 1
+    return tfn * idf * Norm
             
-   def bpn(df, N):
-       tf= 1
-       idf= log((N - df) / (df))
-       Norm= 1
-       return (tf * idf * Norm)
+def bpn(df, N):
+    tf = 1
+    idf = log((N - df) / df)
+    Norm = 1
+    return tf * idf * Norm
             
-    def bsn(df, N):
-        tf= 1
-        idf= (log((N + 1) / (df)) ** 2
-        Norm= 1
-        return (tf * idf * Norm)
+def bsn(df, N):
+    tf = 1
+    idf = (log((N + 1) / df)) ** 2
+    norm = 1
+    return tf * idf * norm
           
-    def bfn(df):
-        tf= 1
-        idf= 1 / df
-        Norm= 1
-        return (tf * idf * Norm)
+def bfn(df):
+    tf = 1
+    idf = 1 / df
+    Norm = 1
+    return tf * idf * Norm
           
-    def ssn(tf, df, N):
-        tfs= tf ** 2
-        idf= (log((N + 1) / (df)) ** 2
-        Norm= 1
-        return (tfs * idf * Norm)
+def ssn(tf, df, N):
+    tfs = tf ** 2
+    idf = (log((N + 1) / df)) ** 2
+    norm = 1
+    return tfs * idf * norm
           
-    def spn(tf, df, N):
-        tfs= tf ** 2
-        idf= log((N - df) / (df))
-        Norm= 1
-        return (tfs * idf * Norm)
+def spn(tf, df, N):
+    tfs = tf ** 2
+    idf = log((N - df) / df)
+    Norm = 1
+    return tfs * idf * Norm
           
-    def sfn(tf, df):
-        tfs= tf ** 2
-        idf= 1 / df
-        Norm= 1
-        return (tfs * idf * Norm)
+def sfn(tf, df):
+    tfs = tf ** 2
+    idf = 1 / df
+    Norm = 1
+    return tfs * idf * Norm
           
-    def stn(tf, df, N):
-        tfs= tf ** 2
-        idf= log(N / df)
-        Norm= 1
-        return (tfs * idf * Norm)
+def stn(tf, df, N):
+    tfs = tf ** 2
+    idf = log(N / df)
+    Norm = 1
+    return tfs * idf * Norm
           
-    def snn(tf):
-        tfs= tf ** 2
-        idf= 1
-        Norm= 1
-        return (tfs * idf * Norm)
+def snn(tf):
+    tfs = tf ** 2
+    idf = 1
+    Norm = 1
+    return tfs * idf * Norm
               
-     def lnn(tf):
-         tfl= 1 + log(tf)
-         idf= 1
-         Norm= 1
-         return (tfl * idf * Norm)
+def lnn(tf):
+    tfl = 1 + log(tf)
+    idf = 1
+    Norm = 1
+    return tfl * idf * Norm
               
        
               
                 
-        def lfn(tf, df):
-            tfl= 1 + log(tf)
-            idf= 1 / df
-            Norm= 1
-            return (tfl * idf * Norm)
+def lfn(tf, df):
+   tfl = 1 + log(tf)
+   idf = 1 / df
+   Norm = 1
+   return tfl * idf * Norm
               
         
-          def lpn(tf, df, N):
-              tfl= 1 + log(tf)
-              idf= log((N - df) / (df))
-              Norm= 1
-              return (tfl * idf * Norm)
+def lpn(tf, df, N):
+    tfl = 1 + log(tf)
+    idf = log((N - df) / df)
+    Norm = 1
+    return tfl * idf * Norm
+
 

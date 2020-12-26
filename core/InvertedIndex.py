@@ -17,6 +17,15 @@ class InvertedIndex:
     def __str__(self):
         return self.payload
 
+    def term_in_doc(self, term, doc_id):
+        if self.payload[term]:
+            if self.payload[term][doc_id]:
+                return self.payload[term][doc_id]
+            else:
+                return 0
+        else:
+            return 0
+
     def persist(self):
         try:
             import cPickle as pickle
@@ -49,9 +58,11 @@ class InvertedIndex:
             if doc_id in self.payload[word]:
                 return self.payload[word][doc_id]
             else:
-                raise LookupError('%s not in document %s' % (str(word), str(doc_id)))
+                return 0
+                #raise LookupError('%s not in document %s' % (str(word), str(doc_id)))
         else:
-            raise LookupError('%s not in index' % str(word))
+            return 0
+            #raise LookupError('%s not in index' % str(word))
 
     def get_index_frequency(self, word):
         """
@@ -62,6 +73,7 @@ class InvertedIndex:
             return len(self.payload[word])
         else:
             raise LookupError('%s not in index' % word)
+
     @staticmethod
     def get_instance():
         try:
