@@ -28,6 +28,7 @@ def compute_K(doc_length, average_doc_length):
 
 
 def ltn(tf, dft, N):
+    print("tf :", tf, " the idf : ", log(N / dft))
     return (1 + log(tf)) * log(N / dft)
 
 
@@ -38,18 +39,13 @@ def bnn():
 def xyz():
     pass
 
-def bnn(is_present, ):
-    tf = 1
+def bnn(tf):
     idf = 1
     Norm = 1
-    if is_present:
-        tf * idf * Norm
-    else:
-        return 0
+    return tf * idf * Norm
 
 
-
-def btn(is_present,df , N):
+def btn(is_present, df, N):
     tf= 1
     norm = 1
     if is_present:
@@ -59,18 +55,19 @@ def btn(is_present,df , N):
         return 0
 
 
-
 def lsn(tf, df, N):
     tfl = 1 + log(tf)
     idf = (log((N + 1) / df))**2
     return tfl * idf
-          
+
+
 def ntn(tf, df, N):
     tfn= tf
     idf= log(N / df)
     Norm= 1
     return tfn * idf * Norm
-          
+
+
 def nnn(tf):
     tfn= tf
     idf= 1
@@ -83,19 +80,22 @@ def nfn(tf, df):
     idf = 1 / df
     norm = 1
     return tfn * idf * norm
-          
+
+
 def npn(tf, df, N):
     tfn= tf
     idf= log((N - df) / df)
     Norm= 1
     return tfn * idf * Norm
-          
+
+
 def nsn(tf, df, N):
     tfn= tf
     idf= (log((N + 1) / df)) ** 2
     Norm = 1
     return tfn * idf * Norm
-            
+
+
 def bpn(df, N):
     tf = 1
     idf = log((N - df) / df)
@@ -107,19 +107,22 @@ def bsn(df, N):
     idf = (log((N + 1) / df)) ** 2
     norm = 1
     return tf * idf * norm
-          
+
+
 def bfn(df):
     tf = 1
     idf = 1 / df
     Norm = 1
     return tf * idf * Norm
-          
+
+
 def ssn(tf, df, N):
     tfs = tf ** 2
     idf = (log((N + 1) / df)) ** 2
     norm = 1
     return tfs * idf * norm
-          
+
+
 def spn(tf, df, N):
     tfs = tf ** 2
     idf = log((N - df) / df)

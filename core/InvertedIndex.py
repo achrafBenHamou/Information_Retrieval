@@ -53,7 +53,7 @@ class InvertedIndex:
             dict_word[doc_id] = 1
             self.payload[word] = dict_word
 
-    def get_document_frequency(self, word, doc_id):
+    def term_freq_doc(self, word, doc_id):
         if word in self.payload:
             if doc_id in self.payload[word]:
                 return self.payload[word][doc_id]
@@ -63,6 +63,10 @@ class InvertedIndex:
         else:
             return 0
             #raise LookupError('%s not in index' % str(word))
+
+    def tf(self, word, doc_id, doc_len):
+        #return self.term_freq_doc(word, doc_id)/doc_len
+        return self.term_freq_doc(word, doc_id)
 
     def get_index_frequency(self, word):
         """

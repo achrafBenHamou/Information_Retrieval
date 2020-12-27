@@ -1,7 +1,7 @@
 __author__ = 'Abou SANOU'
 
 from core.utils.Builder import build_data_structures
-from core.weight_function import BM25
+from core.weight_function import BM25, ltn
 
 
 class Engine:
@@ -13,21 +13,46 @@ class Engine:
     def run(self):
         results = {}
         for query in self.queries:
-            results[query[0]] = self.run_query(query[1])
+            results[query[0]] = self.run_query_ltn(query[1])
         return results
 
     def run_query(self, query):
-        count = 0
         query_result = dict()
         for term in query:
             if term in self.index:
-                doc_dict = self.index[term]  # term -> {doc1:5, doc3:9, doc10:10}
-                for doc_id, freq in doc_dict.items():  # for each document and its word frequency
-                    print("Numbers of results : {} of the request {}".format(len(doc_dict.items()), query))
-                    score = BM25(number_docs=len(doc_dict), freq=freq, qf=1, r=0, N=len(self.dlt),
+                for doc_id, freq in self.index[term].items():
+                    score = BM25(number_docs=len(self.index[term]), freq=freq, qf=1, r=0, N=len(self.dlt),
                                  doc_length=self.dlt.get_length(doc_id)
-                                 , average_doc_length=self.dlt.get_average_length())  # calculate score
-                    if doc_id in query_result:  # this document has already been scored once
+                                 , average_doc_length=self.dlt.get_average_length())
+                    if doc_id in query_result:
+                        query_result[doc_id] += score
+                    else:
+                        query_result[doc_id] = score
+        return query_result
+
+    def run_query_ltn(self, query):
+        query_result = dict()
+        for term in query:
+            if term in self.index:
+                for doc_id, freq in self.index[term].items():
+                    score = ltn(self.index.tf(term, doc_id, self.dlt.get_length(doc_id)), len(self.index[term]),
+                                len(self.dlt))
+                    print(score)
+                    if doc_id in query_result:
+                        query_result[doc_id] += score
+                    else:
+                        query_result[doc_id] = score
+        return query_result
+
+    def weigt_query(self, query):
+        query_result = dict()
+        for term in query:
+            if term in self.index:
+                for doc_id, freq in self.index[term].items():
+                    score = ltn(self.index.tf(term, doc_id, self.dlt.get_length(doc_id)), len(self.index[term]),
+                                len(self.dlt))
+                    print(score)
+                    if doc_id in query_result:
                         query_result[doc_id] += score
                     else:
                         query_result[doc_id] = score

@@ -36,3 +36,6 @@ class QueryParser:
 
     def get_queries(self):
         return self.queries
+
+    def get_tf(self, word, req_id):
+        self.queries[req_id]
