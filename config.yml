@@ -9,6 +9,6 @@ data:
     group:
 run_step:
     step: 1
-    step_min: 2
-    w_func: BM25
+    step_min: 10
+    w_func: bm25
     search_level: articles

@@ -29,10 +29,11 @@ class RunBuilder:
                            ".txt", "w")
         for query in self.results:
             temp = dict(sorted(self.results[query].items(), key=lambda item: item[1], reverse=True))
+            #print(temp)
             count = 1
             for doc_id in temp:
                 output_file.write("{} {} {} {} {} {} {}\n"
-                                  .format(query.strip(), "Q0", doc_id.strip(), count, temp[doc_id], self.group, "/article[1]"))
+                                .format(query.strip(), "Q0", doc_id.strip(), count, temp[doc_id], self.group, "/article[1]"))
                 count = count + 1
                 if count == 1501:
                     break

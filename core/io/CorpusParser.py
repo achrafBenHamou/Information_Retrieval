@@ -6,7 +6,8 @@ from nltk import word_tokenize, WordNetLemmatizer
 from nltk.corpus import stopwords
 from config.Config import ConfigFile
 from core.utils.Util import caching_files_exist
-
+from nltk.stem import PorterStemmer
+from nltk.stem import LancasterStemmer
 
 class CorpusParser:
 
@@ -22,7 +23,7 @@ class CorpusParser:
         list_lemma = []
         text = text.lower()
         text = re.sub(r"\n", " ", text)
-        # text = re.sub(r"https?://.*[\s]*", "", text)
+        #text = re.sub(r"https?://.*[\s]*", "", text)
         text = re.sub(r"[^a-z ]*", "", text)
         text = re.sub(r"[\s]+", " ", text)
         list_tokens = word_tokenize(text)
