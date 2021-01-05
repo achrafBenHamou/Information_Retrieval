@@ -1,9 +1,16 @@
+__author__ = 'Abou SANOU'
+
 import math
 from math import log
 
-k1 = 1.5
+k1 = 1.2
 k2 = 100
 b = 0.75
+
+
+#k1 = 0.75
+#k2 = 100
+#b = 0.80
 R = 0.0
 epsilon = 0.6
 
@@ -43,10 +50,6 @@ def BM25L(df, freq, N, avgdl, doc_len, delta=0.5, k1=1.5, b=0.75):
     ctd = freq / (1 - b + b * (doc_len / avgdl))
 
     return math.log((N + 1) / (df + 0.5)) * ((k1 + 1) * ctd) / (k1 + ctd)
-
-
-def compute_K(doc_length, average_doc_length):
-    return k1 * ((1 - b) + b * (float(doc_length) / float(average_doc_length)))
 
 
 def ltn(tf, dft, N):
@@ -202,9 +205,13 @@ def lpn(tf, df, N):
 # average_doc_length : average length of all documents
 # qf = 1
 # r = 0
-def BM25(df, freq, qf, r, N, doc_length, average_doc_length):
-    K = compute_K(doc_length, average_doc_length)
+def bm25(df, freq, qf, r, N, doc_length, average_doc_length):
+    K = k(doc_length, average_doc_length)
     td = log(((r + 0.5) / (R - r + 0.5)) / ((df - r + 0.5) / (N - df - R + r + 0.5)))
     idf = ((k1 + 1) * freq) / (K + freq)
     norm = ((k2 + 1) * qf) / (k2 + qf)
     return td * idf * norm
+
+
+def k(doc_length, average_doc_length):
+    return k1 * ((1 - b) + b * (float(doc_length) / float(average_doc_length)))

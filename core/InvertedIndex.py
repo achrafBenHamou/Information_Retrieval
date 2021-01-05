@@ -1,21 +1,6 @@
+__author__ = 'Abou SANOU'
 from config.Config import ConfigFile
-
-
 class InvertedIndex:
-
-    def __init__(self):
-        # word -> [ doc1, doc2 , doc3]
-        # word1 -> [doc1]
-        self.payload = dict()
-
-    def __contains__(self, item):
-        return item in self.payload
-
-    def __getitem__(self, item):
-        return self.payload[item]
-
-    def __str__(self):
-        return self.payload
 
     def term_in_doc(self, term, doc_id):
         if self.payload[term]:
@@ -59,10 +44,8 @@ class InvertedIndex:
                 return self.payload[word][doc_id]
             else:
                 return 0
-                #raise LookupError('%s not in document %s' % (str(word), str(doc_id)))
         else:
             return 0
-            #raise LookupError('%s not in index' % str(word))
 
     def tf(self, word, doc_id, doc_len):
         #return self.term_freq_doc(word, doc_id)/doc_len
@@ -77,6 +60,20 @@ class InvertedIndex:
             return len(self.payload[word])
         else:
             raise LookupError('%s not in index' % word)
+
+    def __init__(self):
+        # word -> [ doc1, doc2 , doc3]
+        # word1 -> [doc1]
+        self.payload = dict()
+
+    def __contains__(self, item):
+        return item in self.payload
+
+    def __getitem__(self, item):
+        return self.payload[item]
+
+    def __str__(self):
+        return self.payload
 
     @staticmethod
     def get_instance():

@@ -2,7 +2,7 @@ __author__ = 'Abou SANOU'
 
 from config.Config import ConfigFile
 from core.utils.Builder import build_data_structures
-from core.weight_function import BM25, ltn, BM25ATTIRE, BM25ATTIRE_BIS, BM25L, lsn, bm25_plus, tf_idf_epsilon
+from core.weight_function import ltn, BM25ATTIRE, BM25ATTIRE_BIS, BM25L, lsn, bm25_plus, tf_idf_epsilon, bm25, ntn
 
 
 class Engine:
@@ -31,8 +31,22 @@ class Engine:
                 results[query[0]] = self.run_query_bm25_plus(query[1])
             if weight_function == "tfidfepsilon":
                 results[query[0]] = self.run_query_tf_idf_epsilon(query[1])
-
+            if weight_function == "ntn":
+                results[query[0]] = self.run_query_ntn(query[1])
         return results
+
+    def run_query_ntn(self, query):
+        query_result = dict()
+        for term in query:
+            if term in self.index:
+                for doc_id, freq in self.index[term].items():
+                    score = ntn(tf=freq, df=len(self.index[term]), N=len(self.dlt))
+                    if doc_id in query_result:
+                        query_result[doc_id] += score
+                    else:
+                        query_result[doc_id] = score
+        return query_result
+        pass
 
     def run_query_tf_idf_epsilon(self, query):
         query_result = dict()
@@ -106,7 +120,7 @@ class Engine:
         for term in query:
             if term in self.index:
                 for doc_id, freq in self.index[term].items():
-                    score = BM25(df=len(self.index[term]), freq=freq, qf=1, r=0, N=len(self.dlt),
+                    score = bm25(df=len(self.index[term]), freq=freq, qf=1, r=0, N=len(self.dlt),
                                  doc_length=self.dlt.get_length(doc_id)
                                  , average_doc_length=self.dlt.get_average_length())
                     if doc_id in query_result:
