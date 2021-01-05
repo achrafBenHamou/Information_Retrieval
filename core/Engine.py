@@ -2,7 +2,7 @@ __author__ = 'Abou SANOU'
 
 from config.Config import ConfigFile
 from core.utils.Builder import build_data_structures
-from core.weight_function import BM25, ltn, BM25ATTIRE, BM25ATTIRE_BIS, BM25L, lsn
+from core.weight_function import BM25, ltn, BM25ATTIRE, BM25ATTIRE_BIS, BM25L, lsn, bm25_plus, tf_idf_epsilon
 
 
 class Engine:
@@ -27,8 +27,38 @@ class Engine:
                 results[query[0]] = self.run_query_bm25_attire_bis(query[1])
             if weight_function == "bm25l":
                 results[query[0]] = self.run_query_bm25_l(query[1])
+            if weight_function == "bm25lplus":
+                results[query[0]] = self.run_query_bm25_plus(query[1])
+            if weight_function == "tfidfepsilon":
+                results[query[0]] = self.run_query_tf_idf_epsilon(query[1])
 
         return results
+
+    def run_query_tf_idf_epsilon(self, query):
+        query_result = dict()
+        for term in query:
+            if term in self.index:
+                for doc_id, freq in self.index[term].items():
+                    score = tf_idf_epsilon(df=len(self.index[term]), freq=freq, N=len(self.dlt),
+                                      doc_len=self.dlt.get_length(doc_id), avgdl=self.dlt.get_average_length())
+                    if doc_id in query_result:
+                        query_result[doc_id] += score
+                    else:
+                        query_result[doc_id] = score
+        return query_result
+
+    def run_query_bm25_plus(self, query):
+        query_result = dict()
+        for term in query:
+            if term in self.index:
+                for doc_id, freq in self.index[term].items():
+                    score = bm25_plus(df=len(self.index[term]), freq=freq, N=len(self.dlt),
+                                           doc_len=self.dlt.get_length(doc_id), avgdl=self.dlt.get_average_length())
+                    if doc_id in query_result:
+                        query_result[doc_id] += score
+                    else:
+                        query_result[doc_id] = score
+        return query_result
 
     def run_query_bm25_attire_bis(self, query):
         query_result = dict()

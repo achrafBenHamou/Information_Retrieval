@@ -8,17 +8,15 @@ R = 0.0
 epsilon = 0.6
 
 
-def tf_idf_epsilon(freq, N, df,doc_len, avdl, epsilon=0.6):
-    tmp = (1+math.log(1+math.log(  ((freq)/(1-b+b*(doc_len/avdl))) +epsilon  )))
-    return math.log((N+1)/df)*tmp
+def tf_idf_epsilon(freq, N, df, doc_len, avgdl, epsilon=0.6, b=0.4):
+    tmp = (1 + math.log(1 + math.log(((freq) / (1 - b + b * (doc_len / avgdl))) + epsilon)))
+    return math.log((N + 1) / df) * tmp
 
 
-
-
-def bm25_plus(freq, N, df, doc_len, avdl, k1=1.6, epsilon=0.6):
+def bm25_plus(freq, N, df, doc_len, avgdl, k1=1.6, epsilon=0.6):
     log_part = math.log((N + 1) / df)
     num = ((k1 + 1) * freq)
-    det = (k1 * ((1 - b) + b * (doc_len / avdl)) + freq)
+    det = (k1 * ((1 - b) + b * (doc_len / avgdl)) + freq)
     return log_part * ((num / det) + epsilon)
 
 

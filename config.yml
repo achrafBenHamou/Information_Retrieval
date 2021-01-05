@@ -9,6 +9,6 @@ data:
     group:
 run_step:
     step: 1
-    step_min: 10
-    w_func: bm25
+    step_min: 1
+    w_func: tfidfepsilon
     search_level: articles

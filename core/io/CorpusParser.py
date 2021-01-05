@@ -34,6 +34,7 @@ class CorpusParser:
                 list_lemma.append(lemma)
         # after this step, there is always the word with single char, I decide to delete them.
         return [i for i in list_lemma if len(i) > 1]
+        #return list_tokens
 
     def parse(self):
         with open(self.filename, encoding="utf8") as file:
