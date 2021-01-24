@@ -1,3 +1,4 @@
+author__ = 'Abou SANOU'
 from core.ponderation.tf_w_func import b, n, m, a, s, l
 
 

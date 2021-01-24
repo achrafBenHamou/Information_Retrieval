@@ -1,3 +1,4 @@
+author__ = 'Abou SANOU'
 from math import log
 
 

@@ -6,11 +6,6 @@ from math import log
 k1 = 1.2
 k2 = 100
 b = 0.75
-
-
-#k1 = 0.75
-#k2 = 100
-#b = 0.80
 R = 0.0
 epsilon = 0.6
 
