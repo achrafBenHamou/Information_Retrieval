@@ -2,7 +2,7 @@ import re
 import xml.etree.ElementTree as ET
 import logging
 from xml.etree import ElementTree
-
+import glob
 import nltk
 import xmltodict
 
@@ -148,3 +148,23 @@ class CorpusParser:
 
     def get_all_page_rank(self):
         return self.page_rank
+
+def parse_xmlbis(self):
+    filenames = glob.glob("[612-19738249].xml") 
+    bodys=()
+
+    for filename in filenames:
+
+        with open(filename, 'r', encoding="utf-8") as content:
+            tree = ET.parse(content)
+            lines=content.readlines()
+            i1=lines.index("<bdy>")
+            i2=lines.index("</bdy>")
+            bodys.append(lines[i1:i2])
+            
+            return(bodys)
+
+
+        
+
+        
