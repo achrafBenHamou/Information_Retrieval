@@ -152,7 +152,7 @@ class CorpusParser:
 def parse_xmlbis(self):   #parser tout les fichier XML 
     filenames = glob.glob("[612-19738249].xml") 
     bodys=()
-
+    parags=()
     for filename in filenames:
 
         with open(filename, 'r', encoding="utf-8") as content:
@@ -161,8 +161,14 @@ def parse_xmlbis(self):   #parser tout les fichier XML
             i1=lines.index("<bdy>")
             i2=lines.index("</bdy>")
             bodys.append(lines[i1:i2])
+
+            j1=lines.index("<p>")
+            j2=lines.index("</p>")
+            parags.append(lines[j1:J2])
+            path1=tree.getpath(<bdy>)
+            path2=tree.getpath(<p>)
             
-            return(bodys)
+            return(bodys,parags,path1,path2)
 
 
         
