@@ -149,7 +149,7 @@ class CorpusParser:
     def get_all_page_rank(self):
         return self.page_rank
 
-def parse_xmlbis(self):
+def parse_xmlbis(self):   #parser tout les fichier XML 
     filenames = glob.glob("[612-19738249].xml") 
     bodys=()
 
