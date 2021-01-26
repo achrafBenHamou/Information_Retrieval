@@ -200,6 +200,8 @@ def lpn(tf, df, N):
 # average_doc_length : average length of all documents
 # qf = 1
 # r = 0
+#1994-trec-p109-robertson
+#form Michel Beigbeder Information Retrieval – 3
 def bm25(df, freq, qf, r, N, doc_length, average_doc_length):
     K = k(doc_length, average_doc_length)
     td = log(((r + 0.5) / (R - r + 0.5)) / ((df - r + 0.5) / (N - df - R + r + 0.5)))

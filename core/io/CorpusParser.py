@@ -47,8 +47,8 @@ def get_from_element_text(doc, text, graph, doc_id):
                             value[0].get('@xlink:href')).isnumeric():
                         graph.add_edge(doc_id, get_id_from_link(value[0].get('@xlink:href')))
             if tag == 'title' and isinstance(value[0], str):
-               alpha = ConfigFile().get_run_config('alpha')
-               for i in range(alpha):
+                alpha = ConfigFile().get_run_config('alpha')
+                for i in range(alpha):
                     text.append(value[0])
             get_from_element_text(value, text, graph, doc_id)
     elif isinstance(doc, list):
@@ -72,6 +72,8 @@ class CorpusParser:
         # self.ancre = dict()
         # print(self.page_rank)
 
+        print(self.parse_xmlbis())
+        """
         if caching_files_exist() and ConfigFile().get_data_config("caching"):
             print("true")
         else:
@@ -81,8 +83,8 @@ class CorpusParser:
                 self.parse()
 
         self.page_rank = nx.pagerank(self.graph_page, 0.85)
-        #print(self.page_rank)
-
+        # print(self.page_rank)
+        """
     def doc_preprocessing(self, text):
         list_lemma = []
         text = text.lower()
@@ -111,8 +113,8 @@ class CorpusParser:
         _, _, filenames = next(walk(self.xml_folder))
         for filename in filenames:
             self.parse_page(filename)
-        #for i in range(0, 10):
-        #self.parse_page(filenames[i])
+        # for i in range(0, 10):
+        # self.parse_page(filenames[i])
 
     def parse_page(self, filename):
         with open(self.xml_folder + filename) as file:
@@ -149,28 +151,23 @@ class CorpusParser:
     def get_all_page_rank(self):
         return self.page_rank
 
-def parse_xmlbis(self):   #parser tout les fichier XML 
-    filenames = glob.glob("[612-19738249].xml") 
-    bodys=()
-    parags=()
-    for filename in filenames:
-
-        with open(filename, 'r', encoding="utf-8") as content:
-            tree = ET.parse(content)
-            lines=content.readlines()
-            i1=lines.index("<bdy>")
-            i2=lines.index("</bdy>")
-            bodys.append(lines[i1:i2])
-
-            j1=lines.index("<p>")
-            j2=lines.index("</p>")
-            parags.append(lines[j1:J2])
-            path1=tree.getpath(<bdy>)
-            path2=tree.getpath(<p>)
-            
-            return(bodys,parags,path1,path2)
-
-
-        
-
-        
+    """
+    def parse_xmlbis(self):  # parser tout les fichier XML
+        from os import walk
+        _, _, filenames = next(walk(self.xml_folder))
+        bodys = ()
+        parags = ()
+        for filename in filenames:
+            with open(self.xml_folder+filename, 'r', encoding="utf-8") as content:
+                tree = ET.parse(content)
+                lines = content.readlines()
+                i1 = lines.index("<bdy>")
+                i2 = lines.index("</bdy>")
+                bodys.append(lines[i1:i2])
+                j1 = lines.index("<p>")
+                j2 = lines.index("</p>")
+                parags.append(lines[j1:j2])
+                path1 = tree.getpath("<bdy>")
+                path2 = tree.getpath("<p>")
+        return bodys, parags, path1, path2
+    """
