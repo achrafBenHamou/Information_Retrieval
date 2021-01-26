@@ -101,6 +101,14 @@ def nfn(tf, df):
     norm = 1
     return tfn * idf * norm
 
+#<<<<<<< Amine
+#def btn(df, N):
+#    tf= 1
+#    idf= log(N / df)
+#    Norm= 1
+#    return (tf * idf * Norm)
+#=======
+#>>>>>>> main
 
 def npn(tf, df, N):
     tfn = tf
