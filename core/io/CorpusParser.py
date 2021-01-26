@@ -72,8 +72,8 @@ class CorpusParser:
         # self.ancre = dict()
         # print(self.page_rank)
 
-        print(self.parse_xmlbis())
-        """
+        #print(self.parse_xmlbis())
+
         if caching_files_exist() and ConfigFile().get_data_config("caching"):
             print("true")
         else:
@@ -84,7 +84,7 @@ class CorpusParser:
 
         self.page_rank = nx.pagerank(self.graph_page, 0.85)
         # print(self.page_rank)
-        """
+
     def doc_preprocessing(self, text):
         list_lemma = []
         text = text.lower()
