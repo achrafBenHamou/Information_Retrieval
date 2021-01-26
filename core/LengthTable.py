@@ -1,3 +1,4 @@
+author__ = 'Abou SANOU'
 from config.Config import ConfigFile
 
 
@@ -9,6 +10,9 @@ class LengthTable:
     """
     def __init__(self):
         self.table = dict()
+
+    def __str__(self):
+        self.table
 
     def __len__(self):
         return len(self.table)
@@ -47,3 +51,7 @@ class LengthTable:
             import pickle
         with open(ConfigFile().get_data_config("persist_length"), 'rb') as file:
             return pickle.load(file)
+
+    def print_(self):
+        for item, value in self.table:
+            print(item, " having size", value)

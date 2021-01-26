@@ -1,19 +1,15 @@
+__author__ = 'Abou SANOU'
 from config.Config import ConfigFile
-
-
 class InvertedIndex:
 
-    def __init__(self):
-        self.payload = dict()
-
-    def __contains__(self, item):
-        return item in self.payload
-
-    def __getitem__(self, item):
-        return self.payload[item]
-
-    def __str__(self):
-        return self.payload
+    def term_in_doc(self, term, doc_id):
+        if self.payload[term]:
+            if self.payload[term][doc_id]:
+                return self.payload[term][doc_id]
+            else:
+                return 0
+        else:
+            return 0
 
     def persist(self):
         try:
@@ -42,14 +38,18 @@ class InvertedIndex:
             dict_word[doc_id] = 1
             self.payload[word] = dict_word
 
-    def get_document_frequency(self, word, doc_id):
+    def term_freq_doc(self, word, doc_id):
         if word in self.payload:
             if doc_id in self.payload[word]:
                 return self.payload[word][doc_id]
             else:
-                raise LookupError('%s not in document %s' % (str(word), str(doc_id)))
+                return 0
         else:
-            raise LookupError('%s not in index' % str(word))
+            return 0
+
+    def tf(self, word, doc_id, doc_len):
+        #return self.term_freq_doc(word, doc_id)/doc_len
+        return self.term_freq_doc(word, doc_id)
 
     def get_index_frequency(self, word):
         """
@@ -60,6 +60,21 @@ class InvertedIndex:
             return len(self.payload[word])
         else:
             raise LookupError('%s not in index' % word)
+
+    def __init__(self):
+        # word -> [ doc1, doc2 , doc3]
+        # word1 -> [doc1]
+        self.payload = dict()
+
+    def __contains__(self, item):
+        return item in self.payload
+
+    def __getitem__(self, item):
+        return self.payload[item]
+
+    def __str__(self):
+        return self.payload
+
     @staticmethod
     def get_instance():
         try:
