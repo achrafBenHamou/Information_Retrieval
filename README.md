@@ -5,10 +5,8 @@
 * Achraf
 * Amine Rahbi
 
-> This system is a small IRS. It uses the set of xml documents from INEX competition
+> This system is a small IRS. It uses the set of xml documents from INEX competition.
 > We used a lot of ponderation function from [SMART system](https://en.wikipedia.org/wiki/SMART_Information_Retrieval_System).
->
->  
 
 In this summary, we will git the different process 
 

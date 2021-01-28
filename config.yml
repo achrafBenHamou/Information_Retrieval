@@ -2,7 +2,7 @@ data:
     filename: data/Text_Only_Ascii_Coll_MWI_NoSem
     query: data/query/request.txt
     xml_folder: data/coll/
-    run_folder: data/runs/last_runs/
+    run_folder: data/runs/
     caching: False
     persist_index: data/persist/data_index.pkl
     persist_length: data/persist/data_length.pkl
@@ -10,9 +10,9 @@ data:
     group: AbouAchrafAmineAli
     use_xml_file : True
 run_step:
-    alpha: 6
-    step: 2
-    step_min: 4
+    alpha: 1
+    step: 1
+    step_min: 1
     w_func: bm25
     search_level: k1_1.2_b_0.75_k2_100_variant_p_r_articles
     activate_page_rank: True
