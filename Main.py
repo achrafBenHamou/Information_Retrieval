@@ -1,17 +1,13 @@
-import re
-import xml.etree.ElementTree as ET
-import logging
-from lxml import etree
+from core.Engine import Engine
+from core.io.RunBuilder import RunBuilder
 
-def parse():
-    with open("data/coll/612.xml", encoding="utf8") as file:
-        xml_object = ET.fromstring(str(file.read()))
-        print(xml_object)
+from core.io.CorpusParser import CorpusParser
+from core.io.QueryParser import QueryParser
 
 
 if __name__ == "__main__":
-    import xml.etree.ElementTree as ET
-    import lxml
-    myParser = lxml.etree.XMLParser(resolve_entities=False, recover=True)
-    xmlFile = lxml.etree.parse("data/coll/612.xml", parser=myParser)
-    print(xmlFile)
+    corpus = CorpusParser()
+    queries = QueryParser()
+    engine = Engine(queries.get_queries(), corpus.get_corpus(), corpus.page_rank)
+    results = engine.run()
+    builder = RunBuilder(results)
