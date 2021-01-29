@@ -4,7 +4,9 @@ doc_3 -> "les vaccnaces tout le onde"
 doc_4 -> "les vaccnaces monde"
 doc_5 -> "les vaccnaces dubai"
 
-#step 1 parsing
+# step 1 parsing
+
+```
 dictionnary : {key -> value, key -> value}
 dictionnary : { doc_1 -> "salut tout le monde",
                 doc_2 -> "les vaccnaces",
@@ -12,13 +14,18 @@ dictionnary : { doc_1 -> "salut tout le monde",
                 doc_4 -> "les vaccnaces monde",
                 doc_5 -> "les vaccnaces dubai"
 }
+```
 
-#step 2 : building inverted index :
-   dictionnary : {  salut -> [doc_1]
-                    vaccnaces -> [doc_2, doc_3, doc_4, doc_5]
-                    monde -> [doc_1, doc_3, doc_4]
-                  }
 
+# step 2 : building inverted index :
+```
+ dictionnary : {  salut -> [doc_1: tf(salut,doc_1)]
+                    vaccnaces -> [doc_2:tf(vaccances,doc_2), doc_3: tf(vaccances,doc_3), doc_4: tf(vaccances,doc_4), doc_5:tf(vaccances,doc_5)]
+                    monde -> [doc_1:tf(monde,doc_1), doc_3:tf(monde,doc_3), doc_4:tf(monde,doc_4)]
+                 }
+
+```
+  
 
 
    query : "salut monde"
