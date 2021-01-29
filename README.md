@@ -24,14 +24,12 @@ pip install -r requirements.txt
 ## Structure explaining :
 
 In this section we will explain the organization of our project:
-For more examples and usage, please refer to the [Wiki][wiki].
 
  * Config : this folder contains all of logic about the configuration of the system.
- * core : 
- * data :
- * documentation :
- * graph :
- * test :
+ * core : all the needed class and function of the information retrieval engine. From the parser to the inverted index.
+ * data : all the data required during the running of the system. The request, the xml file, the runs ...etc
+ * documentation : The pdf file uses to implement some bm25 variants.
+ * graph : the  notebooks used to generate the graph for the report.
    
 
 

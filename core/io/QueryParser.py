@@ -32,8 +32,6 @@ class QueryParser:
     def parse(self):
         with open(self.filename) as f:
             lines = ''.join(f.readlines())
-        #self.queries = [[x.rstrip().split(":")[0], x.rstrip().split(":")[1].rstrip().split()] for x in
-        #               lines.split('\n')]
         # I choose to do preprocessing of the query because of "+" in last query
         self.queries = [[x.rstrip().split(":")[0], self.doc_preprocessing(x.rstrip().split(":")[1])] for x in
                         lines.split('\n')]

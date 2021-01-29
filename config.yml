@@ -3,7 +3,7 @@ data:
     query: data/query/request.txt
     xml_folder: data/coll/
     run_folder: data/runs/
-    caching: False
+    caching: True
     persist_index: data/persist/data_index.pkl
     persist_length: data/persist/data_length.pkl
     persist_page_rank: data/persist/page_rank.pkl
