@@ -10,6 +10,6 @@ if __name__ == "__main__":
     queries = QueryParser()
     engine = Engine(queries.get_queries(), corpus.get_corpus(), corpus.page_rank)
     results = engine.run()
-    print("")
+
     print(results)
     builder = RunBuilder(results)

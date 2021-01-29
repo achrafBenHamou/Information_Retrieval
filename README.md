@@ -86,3 +86,8 @@ Finally to launch the project you have to run the following command :
 ```sh
 pip install Main.py
 ```
+
+In the core folder, there are all the core compound of the engine.
+The parser, the index, and a lot of utils function.
+Once executed the runs are available in the following folder :
+"run_folder: data/runs/", initially set in config file.
