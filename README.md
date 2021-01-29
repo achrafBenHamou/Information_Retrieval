@@ -52,12 +52,13 @@ The configuration allows to change easily the behaviors of the engine.
 
 
 * alpha :
-* step :
-* step_min :
+* step : in generation of run, this number will be insert in run file name.
+* step_min : in generation of run, this number will be insert in run file name.
 * w_func :
+can take the following value ltn, lsn, bm25, bm25attire, bm25attirebis, bm25l, bm25lplus, tfidfepsilon, ntn.
 * search_level :
-* activate_page_rank :
-* granularity :
+* activate_page_rank : takes True or False
+* granularity : takes "articles" as a the value  
 ```text
 data:
     filename: data/Text_Only_Ascii_Coll_MWI_NoSem
@@ -79,16 +80,9 @@ run_step:
     activate_page_rank: True
     granularity: articles
 ```
+The previous example is a basic config file. In this case we use the xml file.
 
-## Release History
-
-## Meta
-
-
-## Contributing
-
-1. Fork it (<https://github.com/achrafBenHamou/Information_Retrieval>)
-2. Create your feature branch (`git checkout -b feature/fooBar`)
-3. Commit your changes (`git commit -am 'Add some fooBar'`)
-4. Push to the branch (`git push origin feature/fooBar`)
-5. Create a new Pull Request
+Finally to launch the project you have to run the following command :
+```sh
+pip install Main.py
+```
