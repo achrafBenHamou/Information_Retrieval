@@ -82,7 +82,7 @@ The previous example is a basic config file. In this case we use the xml file.
 
 Finally to launch the project you have to run the following command :
 ```sh
-pip install Main.py
+python Main.py
 ```
 
 In the core folder, there are all the core compound of the engine.
