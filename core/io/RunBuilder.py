@@ -22,7 +22,7 @@ class RunBuilder:
         self.page_rank = page_rank
         self.alpha = alpha
         self.make_run()
-
+# product runs
     def make_run(self, path=ConfigFile().get_data_config("run_folder")):
         output_file = open(path +
                            self.group +
