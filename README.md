@@ -1,8 +1,8 @@
 # Information retrieval system
 ## Authors 
-* Abou SANOU
+* AchrafBEN HAMOU
 * Ali Hani
-* Achraf
+* Abou SANOU 
 * Amine RABHI
 
 > This system is a small IRS. It uses the set of xml documents from INEX competition.
