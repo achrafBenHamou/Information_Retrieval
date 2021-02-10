@@ -1,5 +1,3 @@
-__author__ = 'Abou SANOU'
-
 from config.Config import ConfigFile
 from core.utils.Builder import build_data_structures
 from core.weight_function import ltn, BM25ATTIRE, BM25ATTIRE_BIS, BM25L, lsn, bm25_plus, tf_idf_epsilon, bm25, ntn
