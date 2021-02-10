@@ -1,6 +1,6 @@
 # Information retrieval system
 ## Authors 
-* AchrafBEN HAMOU
+* Achraf BEN HAMOU
 * Ali Hani
 * Abou SANOU 
 * Amine RABHI
