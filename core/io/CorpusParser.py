@@ -9,7 +9,7 @@ from config.Config import ConfigFile
 from core.utils.Util import caching_files_exist
 import networkx as nx
 
-
+# parsing documents
 class CorpusParser:
 
     def __init__(self, filename=None, cleaning=[], lemmatizer=WordNetLemmatizer(), xml_folder=None):
