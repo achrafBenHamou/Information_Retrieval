@@ -1,5 +1,3 @@
-__author__ = 'Abou SANOU'
-
 import math
 from math import log
 
