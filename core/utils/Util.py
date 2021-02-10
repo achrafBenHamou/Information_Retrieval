@@ -1,4 +1,3 @@
-author__ = 'Abou SANOU'
 import os
 from config.Config import ConfigFile
 
