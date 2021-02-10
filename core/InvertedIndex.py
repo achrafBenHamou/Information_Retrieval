@@ -1,4 +1,3 @@
-__author__ = 'Abou SANOU'
 from config.Config import ConfigFile
 class InvertedIndex:
 
