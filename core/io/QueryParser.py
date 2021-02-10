@@ -4,7 +4,7 @@ from nltk import word_tokenize, WordNetLemmatizer
 from nltk.corpus import stopwords
 from config.Config import ConfigFile
 
-
+# quering parser
 class QueryParser:
 
     def __init__(self, filename=None, lemmatizer=WordNetLemmatizer()):
